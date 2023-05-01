@@ -1,14 +1,12 @@
-import sqlite3
+from utils import get_movie_by_title
+from flask import Flask, Blueprint, render_template
 
-connection = sqlite3.connect("netflix.db")
-cursor = connection.cursor()
-sqlite_query = """
-    SELECT *
-    FROM netflix
-"""
-cursor.execute(sqlite_query)
+app = Flask(__name__)
 
-for row in cursor.fetchall():
-    print(row)
 
-connection.close()
+@app.route("/movie/<title>")
+def movie_title(title):
+    return get_movie_by_title(title)
+
+
+app.run()
